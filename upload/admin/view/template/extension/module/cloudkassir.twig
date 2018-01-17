@@ -1,0 +1,203 @@
+{{ header }}{{ column_left }}
+<div id="content">
+    <div class="page-header">
+        <div class="container-fluid">
+            <div class="pull-right">
+                <button type="submit" form="form-module" data-toggle="tooltip" title="{{ button_save }}" class="btn btn-primary"><i class="fa fa-save"></i></button>
+                <a href="{{ cancel }}" data-toggle="tooltip" title="{{ button_cancel }}" class="btn btn-default"><i class="fa fa-reply"></i></a>
+            </div>
+            <h1>{{ heading_title }}</h1>
+            <ul class="breadcrumb">
+                {% for breadcrumb in breadcrumbs %}
+                    <li><a href="{{ breadcrumb.href }}">{{ breadcrumb.text }}</a></li>
+                {% endfor %}
+            </ul>
+        </div>
+    </div>
+    <div class="container-fluid">
+        {% if error_warning %}
+            <div class="alert alert-danger alert-dismissible"><i class="fa fa-exclamation-circle"></i> {{ error_warning }}
+                <button type="button" class="close" data-dismiss="alert">&times;</button>
+            </div>
+        {% endif %}
+        <div class="panel panel-default">
+            <div class="panel-heading">
+                <h3 class="panel-title"><i class="fa fa-pencil"></i> {{ text_edit }}</h3>
+            </div>
+            <div class="panel-body">
+                <form action="{{ action }}" method="post" enctype="multipart/form-data" id="form-module"
+                      class="form-horizontal">
+                    <div class="form-group">
+                        <label class="col-sm-2 control-label" for="entry-status">{{ entry_status }}</label>
+                        <div class="col-sm-10">
+                            <select name="module_cloudkassir_status" id="entry-status" class="form-control">
+                                {% if module_cloudkassir_status %}
+                                    <option value="1" selected="selected">{{ text_enabled }}</option>
+                                    <option value="0">{{ text_disabled }}</option>
+                                {% else %}
+                                    <option value="1">{{ text_enabled }}</option>
+                                    <option value="0" selected="selected">{{ text_disabled }}</option>
+                                {% endif %}
+                            </select>
+                        </div>
+                    </div>
+                    <div class="form-group required">
+                        <label class="col-sm-2 control-label" for="entry-public-id">
+                            <span data-toggle="tooltip" title="{{ help_public_id }}">{{ entry_public_id }}</span>
+                        </label>
+                        <div class="col-sm-10">
+                            <input type="text" name="module_cloudkassir_public_id"
+                                   value="{{ module_cloudkassir_public_id }}"
+                                   placeholder="{{ entry_public_id }}"
+                                   autocomplete="off"
+                                   id="entry-public-id" class="form-control"/>
+                            {% if error_public_id %}
+                                <div class="text-danger">{{ error_public_id }}</div>
+                            {% endif %}
+                        </div>
+                    </div>
+                    <div class="form-group required">
+                        <label class="col-sm-2 control-label" for="entry-secret-key">
+                            <span data-toggle="tooltip" title="{{ help_secret_key }}">{{ entry_secret_key }}</span>
+                        </label>
+                        <div class="col-sm-10">
+                            <input type="text" name="module_cloudkassir_secret_key"
+                                   value="{{ module_cloudkassir_secret_key }}"
+                                   placeholder="{{ entry_secret_key }}"
+                                   autocomplete="off"
+                                   id="entry-secret-key" class="form-control"/>
+                            {% if error_secret_key %}
+                                <div class="text-danger">{{ error_secret_key }}</div>
+                            {% endif %}
+                        </div>
+                    </div>
+
+                    <div class="form-group required">
+                        <label class="col-sm-2 control-label" for="entry-inn">
+                            <span data-toggle="tooltip" title="{{ help_inn }}">{{ entry_inn }}</span>
+                        </label>
+                        <div class="col-sm-10">
+                            <input type="text" name="module_cloudkassir_inn"
+                                   value="{{ module_cloudkassir_inn }}"
+                                   placeholder="{{ entry_inn }}"
+                                   autocomplete="off"
+                                   id="entry-inn" class="form-control"/>
+                            {% if error_inn %}
+                                <div class="text-danger">{{ error_inn }}</div>
+                            {% endif %}
+                        </div>
+                    </div>
+
+                    <div class="form-group">
+                        <label class="col-sm-2 control-label" for="entry-taxation_system">
+                            <span data-toggle="tooltip" title="{{ help_taxation_system }}">{{ entry_taxation_system }}</span>
+                        </label>
+                        <div class="col-sm-10">
+                            <select name="module_cloudkassir_taxation_system" id="entry-taxation_system" class="form-control">
+                                {% for i,v in taxation_systems %}
+                                    <option value="{{ i }}" {% if module_cloudkassir_taxation_system == i %}selected{% endif %}>{{ v }}</option>
+                                {% endfor %}
+                            </select>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label class="col-sm-2 control-label" for="entry-vat">
+                            <span data-toggle="tooltip" title="{{ help_vat }}">{{ entry_vat }}</span>
+                        </label>
+                        <div class="col-sm-10">
+                            <select name="module_cloudkassir_vat" id="entry-vat"
+                                    class="form-control">
+                                <option value="" {% if module_cloudkassir_vat is empty %}selected{% endif %}>{{ text_vat_none }}</option>
+                                {% for i,v in vat_values %}
+                                    <option value="{{ i }}" {% if module_cloudkassir_vat == i and module_cloudkassir_vat|length %}selected{% endif %}>{{ v }}</option>
+                                {% endfor %}
+                            </select>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label class="col-sm-2 control-label" for="entry-vat_delivery">
+                            <span data-toggle="tooltip" title="{{ help_vat_delivery }}">{{ entry_vat_delivery }}</span>
+                        </label>
+                        <div class="col-sm-10">
+                            <select name="module_cloudkassir_vat_delivery" id="entry-vat_delivery"
+                                    class="form-control">
+                                <option value="" {% if module_cloudkassir_vat_delivery is empty %}selected{% endif %}>{{ text_vat_none }}</option>
+                                {% for i,v in vat_values %}
+                                    <option value="{{ i }}" {% if module_cloudkassir_vat_delivery == i and module_cloudkassir_vat_delivery|length %}selected{% endif %}>{{ v }}</option>
+                                {% endfor %}
+                            </select>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label class="col-sm-2 control-label" for="entry-order_status_for_pay">
+                            <span data-toggle="tooltip" title="{{ help_order_status_for_pay }}">{{ entry_order_status_for_pay }}</span>
+                        </label>
+                        <div class="col-sm-10">
+                            <div class="well well-sm" style="height: 150px; overflow: auto;">
+                                {% for status in order_statuses %}
+                                    <div class="checkbox">
+                                        <label>
+                                            <input
+                                                    type="checkbox"
+                                                    name="module_cloudkassir_order_status_for_pay[]"
+                                                    value="{{ status.order_status_id }}"
+                                                    {% if status.order_status_id in module_cloudkassir_order_status_for_pay %}checked{% endif %}
+                                            />
+                                            {{ status.name }}
+                                        </label>
+                                    </div>
+                                {% endfor %}
+                            </div>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label class="col-sm-2 control-label" for="entry-order_status_for_refund">
+                            <span data-toggle="tooltip" title="{{ help_order_status_for_refund }}">{{ entry_order_status_for_refund }}</span>
+                        </label>
+                        <div class="col-sm-10">
+                            <div class="well well-sm" style="height: 150px; overflow: auto;">
+                                {% for status in order_statuses %}
+                                    <div class="checkbox">
+                                        <label>
+                                            <input
+                                                    type="checkbox"
+                                                    name="module_cloudkassir_order_status_for_refund[]"
+                                                    value="{{ status.order_status_id }}"
+                                                    {% if status.order_status_id in module_cloudkassir_order_status_for_refund %}checked{% endif %}
+                                            />
+                                            {{ status.name }}
+                                        </label>
+                                    </div>
+                                {% endfor %}
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="form-group">
+                        <label class="col-sm-2 control-label" for="entry-enabled_for_payments">
+                            <span data-toggle="tooltip" title="{{ help_enabled_for_payments }}">{{ entry_enabled_for_payments }}</span>
+                        </label>
+                        <div class="col-sm-10">
+                            <div class="well well-sm" style="height: 150px; overflow: auto;">
+                                {% for payment in payments %}
+                                    <div class="checkbox">
+                                        <label>
+                                            <input
+                                                    type="checkbox"
+                                                    name="module_cloudkassir_enabled_for_payments[]"
+                                                    value="{{ payment.code }}"
+                                                    {% if payment.code in module_cloudkassir_enabled_for_payments %}checked{% endif %}
+                                            />
+                                            {{ payment.name }}
+                                        </label>
+                                    </div>
+                                {% endfor %}
+                            </div>
+                        </div>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+{{ footer }}
