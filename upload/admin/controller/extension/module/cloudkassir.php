@@ -109,7 +109,7 @@ class ControllerExtensionModuleCloudKassir extends Controller {
 		}
 
 		$data['vat_values'] = array();
-		foreach (array('18', '10', '0', '110', '118') as $vat) {
+		foreach (array('20', '18', '10', '0', '110', '118') as $vat) {
 			$data['vat_values'][$vat] = $this->language->get('text_vat_' . $vat);
 		}
 //		$data['text_vat_none'] = $this->language->get('text_vat_none');
